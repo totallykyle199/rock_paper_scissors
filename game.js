@@ -2,21 +2,24 @@ let humanScore = 0;
 let computerScore = 0;
 
 function getComputerChoice() {
-  let choice = Math.floor(Math.random(3) * 3);
-  if (choice === 0) {
+  let computerChoice = Math.floor(Math.random() * 3);
+  if (computerChoice === 0) {
     return "rock";
-  } else if (choice === 1) {
+  } else if (computerChoice === 1) {
     return "paper";
-  } else if (choice === 2) {
+  } else {
     return "scissors";
   }
 }
 
 function getHumanChoice() {
-  let hChoice = prompt("Choose paper, rock, or scissors").toLowerCase();
-
-  if (hChoice === "paper" || hChoice === "rock" || hChoice === "scissors") {
-    return hChoice;
+  let humanChoice = prompt("Please choose rock, paper, or scissors");
+  if (
+    humanChoice.toLowerCase() === "rock" ||
+    humanChoice.toLowerCase() === "paper" ||
+    humanChoice.toLowerCase() === "scissors"
+  ) {
+    return humanChoice.toLocaleLowerCase();
   } else {
     console.log("Please enter a valid choice");
     return getHumanChoice();
@@ -24,41 +27,36 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-  if (humanChoice === computerChoice) {
-    return "it's a tie";
-  } else if (
+  if (
+    (humanChoice === "rock" && computerChoice === "paper") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
-    humanScore++;
-    return "You win";
+    console.log("You Win!!!");
+    return humanScore++;
+  } else if (humanChoice === computerChoice) {
+    console.log("It's a Tie!!");
+    return;
   } else {
-    computerScore++;
-    return "Computer wins";
+    console.log("Computer Wins!!!");
+    return computerScore++;
   }
 }
 
 function playGame() {
-  const humanChoice = getHumanChoice();
-  const computerChoice = getComputerChoice();
-  console.log(`You chose: ${humanChoice}`);
-  console.log(`Computer chose: ${computerChoice}`);
-  let result = playRound(humanChoice, computerChoice);
-  console.log(result);
-  console.log(`Your score: ${humanScore}`);
-  console.log(`Computer score: ${computerScore}`);
-}
-for (i = 0; i < 5; i++) {
-  playGame();
-}
+  for (let i = 0; i < 5; i++) {
+    human = getHumanChoice();
+    comp = getComputerChoice();
+    playRound(human, comp);
 
-console.log(`Final Scores:`);
-console.log(`Your Score: ${humanScore}`);
-console.log(`Computer Score: ${computerScore}`);
-
-if (humanScore > computerScore) {
-  console.log(`You win!!!`);
-} else {
-  console.log(`Computer Wins!!!`);
+    console.log(`Your Score:${humanScore}  Computer Score: ${computerScore}`);
+  }
+  if (computerScore > humanScore) {
+    console.log("The Computer Wins!!!");
+  } else {
+    console.log("You Win!!!");
+  }
+  computerScore = 0;
+  humanScore = 0;
+  return;
 }
